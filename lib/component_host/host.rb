@@ -7,7 +7,7 @@ module ComponentHost
 
     def self.build(name=nil)
       instance = new
-      instance.name if name
+      instance.name = name if name
       instance
     end
 
@@ -32,7 +32,25 @@ module ComponentHost
     end
 
     def start
-      Actor::Supervisor.start do
+      Actor::Supervisor.start do |supervisor|
+        Signal.trap 'INT' do
+          logger.info { "Interrupt signal trapped; shutting down" }
+
+          Actor::Messaging::Write.(Actor::Messages::Shutdown, supervisor.address)
+        end
+
+        Signal.trap 'TSTP' do
+          logger.info { "Stop signal trapped; suspending components" }
+
+          Actor::Messaging::Write.(Actor::Messages::Suspend, supervisor.address)
+        end
+
+        Signal.trap 'CONT' do
+          logger.info { "Continue signal trapped; resuming components" }
+
+          Actor::Messaging::Write.(Actor::Messages::Resume, supervisor.address)
+        end
+
         components.each_value do |cls|
           cls.start
         end
