@@ -1,2 +1,10 @@
 require 'actor'
+require 'casing'
 require 'log'
+require 'virtual'
+
+require 'component_host/component'
+require 'component_host/component/default_name'
+require 'component_host/component_host'
+require 'component_host/host'
+require 'component_host/log'

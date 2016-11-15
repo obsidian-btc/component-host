@@ -16,6 +16,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.2.3'
   s.bindir = 'bin'
 
+  s.add_runtime_dependency 'casing'
   s.add_runtime_dependency 'log'
-  s.add_runtime_dependency 'ntl-actor'
+  s.add_runtime_dependency 'ntl-actor', '>= 1.0.0.pre1'
+  s.add_runtime_dependency 'virtual'
 end

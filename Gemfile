@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'ntl-actor'
+gem 'ntl-actor', '>= 1.0.0.pre1'
 
 source 'https://gem.fury.io/eventide' do
+  gem 'casing'
   gem 'log'
+  gem 'virtual'
 
   gem 'attribute'
   gem 'clock'

@@ -9,4 +9,6 @@ require_relative '../init.rb'
 
 require 'test_bench/activate'
 
-#require 'component_host/controls'
+require 'component_host/controls'
+
+include ComponentHost

@@ -1,4 +1,4 @@
-ENV['TEST_BENCH_TEST_DIR'] ||= 'test/automated'
+ENV['TEST_BENCH_TESTS_DIR'] ||= 'test/automated'
 
 require_relative './test_init'
 
