@@ -16,9 +16,15 @@ module ComponentHost
     end
 
     def register(cls, name=nil)
+      logger.trace { "Registering component (Name: #{name.inspect}, Class: #{cls.name.inspect})" }
+
       name ||= cls.default_name
 
       components[name] = cls
+
+      logger.debug { "Component registered (Name: #{name.inspect}, Class: #{cls.name.inspect})" }
+
+      cls
     end
 
     def components
