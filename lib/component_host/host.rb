@@ -43,6 +43,7 @@ module ComponentHost
       end
 
     rescue => error
+      logger.fatal "Error raised; exiting process (Class: #{error.class.name}, Message: #{error.message.inspect})"
       record_error_proc.(error)
       raise error
     end
