@@ -16,13 +16,20 @@ module ComponentHost
     end
 
     def register(cls, name=nil)
-      logger.trace { "Registering component (Name: #{name.inspect}, Class: #{cls.name.inspect})" }
+      log_attributes = "Name: #{name.inspect}, Class: #{cls.to_s.inspect}"
+      logger.trace { "Registering component (#{log_attributes})" }
 
       name ||= cls.default_name
 
-      components[name] = cls
+      if existing_component = components[name]
+        error_message = "Component name conflict (#{log_attributes}, RegisteredClass: #{existing_component.to_s.inspect})"
+        logger.error error_message
+        raise NameConflictError, error_message
+      else
+        components[name] = cls
+      end
 
-      logger.debug { "Component registered (Name: #{name.inspect}, Class: #{cls.name.inspect})" }
+      logger.debug { "Component registered (#{log_attributes})" }
 
       cls
     end
@@ -69,6 +76,8 @@ module ComponentHost
     def record_error_proc
       @record_error_proc ||= proc { }
     end
+
+    NameConflictError = Class.new StandardError
 
     module Assertions
       def registered?(cls, name=nil)
